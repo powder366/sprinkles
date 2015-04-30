@@ -1,8 +1,9 @@
 package se.emilsjolander.sprinkles;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,11 +28,12 @@ public final class Sprinkles {
     static Sprinkles sInstance;
     static SQLiteDatabase sDatabase;
 
-    Context mContext;
+    static Context mContext;
     List<Migration> mMigrations = new ArrayList<Migration>();
 
-    private String databaseName;
+    public String databaseName;
     private int initialDatabaseVersion;
+    public String pwd;
 
     private Map<Class, TypeSerializer> typeSerializers = new ConcurrentHashMap<Class, TypeSerializer>();
 
@@ -87,6 +89,8 @@ public final class Sprinkles {
      *     The version of the existing database.
      *
      * @return The singleton Sprinkles instance.
+     *
+     * The default password is sprinkles.
      */
     public static synchronized Sprinkles init(Context context, String databaseName, int initialDatabaseVersion) {
         if (sInstance == null) {
@@ -95,6 +99,18 @@ public final class Sprinkles {
         sInstance.mContext = context.getApplicationContext();
         sInstance.databaseName = databaseName;
         sInstance.initialDatabaseVersion = initialDatabaseVersion;
+        sInstance.pwd = "sprinkles";
+        return sInstance;
+    }
+
+    public static synchronized Sprinkles init(Context context, String databaseName, int initialDatabaseVersion, String pwd) {
+        if (sInstance == null) {
+            sInstance = new Sprinkles();
+        }
+        sInstance.mContext = context.getApplicationContext();
+        sInstance.databaseName = databaseName;
+        sInstance.initialDatabaseVersion = initialDatabaseVersion;
+        sInstance.pwd = pwd;
         return sInstance;
     }
 
@@ -117,7 +133,7 @@ public final class Sprinkles {
 
         if(sDatabase == null) {
             DbOpenHelper dbOpenHelper = new DbOpenHelper(sInstance.mContext, sInstance.databaseName, sInstance.initialDatabaseVersion);
-            sDatabase = dbOpenHelper.getWritableDatabase();
+            sDatabase = dbOpenHelper.getWritableDatabase(sInstance.pwd);
         }
 
         return sDatabase;

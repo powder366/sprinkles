@@ -1,7 +1,8 @@
 package se.emilsjolander.sprinkles;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;

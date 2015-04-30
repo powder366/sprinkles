@@ -1,6 +1,6 @@
 package se.emilsjolander.sprinkles;
 
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 
 public abstract class Migration {
 

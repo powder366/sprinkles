@@ -1,15 +1,29 @@
 package se.emilsjolander.sprinkles;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
+
+import java.io.File;
 
 class DbOpenHelper extends SQLiteOpenHelper {
+
     private int baseVersion;
 
-    protected DbOpenHelper(Context context, String databaseName, int baseVersion) {
+    public DbOpenHelper(Context context, String databaseName, int baseVersion) {
         super(context, databaseName, null, Sprinkles.sInstance.mMigrations.size() + baseVersion);
         this.baseVersion = baseVersion;
+
+        SQLiteDatabase.loadLibs(context);
+        File databaseFile = context.getDatabasePath(Sprinkles.sInstance.databaseName);
+        if(databaseFile.exists()) {
+            SQLiteDatabase.openOrCreateDatabase(databaseFile, Sprinkles.sInstance.pwd, null);
+        } else {
+            databaseFile.mkdirs();
+            databaseFile.delete();
+            SQLiteDatabase.openOrCreateDatabase(databaseFile, Sprinkles.sInstance.pwd, null);
+        }
     }
 
     @Override

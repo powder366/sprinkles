@@ -1,34 +1,57 @@
 apply plugin: 'android-library'
-apply plugin: 'android-test'
 
 repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    mavenLocal()
     mavenCentral()
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
 }
 
 dependencies {
-	compile 'com.android.support:support-v4:19.0.+'
-
-    androidTestCompile 'junit:junit:4.10'
-    androidTestCompile 'org.mockito:mockito-all:1.9.5'
-    androidTestCompile 'org.robolectric:robolectric:2.3'
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:support-v4:19.0.+'
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+    androidTestCompile('org.robolectric:robolectric:2.3') {
+        exclude module: 'classworlds'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-plugin-registry'
+        exclude module: 'maven-profile'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'nekohtml'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-http-shared'
+        exclude module: 'wagon-provider-api'
+    }
     androidTestCompile 'com.squareup:fest-android:1.0.+'
+    compile ('junit:junit:4.12') {
+        exclude (group: 'org.apache.maven.artifact')
+    }
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src/main/java']
             res.srcDirs = ['res']
-            androidTest.setRoot('src/test')
+            androidTest.setRoot('src/androidTest')
         }
     }
 }
-
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/eaa6b5404b7594e6c23b884fdc5795f545db55dd/gradle-mvn-push.gradle'

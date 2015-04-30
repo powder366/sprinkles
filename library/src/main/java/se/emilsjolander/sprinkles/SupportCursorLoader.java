@@ -2,8 +2,9 @@ package se.emilsjolander.sprinkles;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.AsyncTaskLoader;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 
 class SupportCursorLoader extends AsyncTaskLoader<Cursor> {

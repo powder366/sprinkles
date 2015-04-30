@@ -5,9 +5,10 @@ import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 /**
  * Object representing a Query that will return a list of results.

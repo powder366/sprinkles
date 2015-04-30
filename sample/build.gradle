@@ -3,14 +3,14 @@ apply plugin: 'android'
 repositories {
     mavenCentral()
 }
+
 dependencies {
     compile project(':library')
-    compile 'com.android.support:support-v4:19.0.+'
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     sourceSets {
         main {

@@ -4,8 +4,9 @@ import android.annotation.TargetApi;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 class CursorLoader extends AsyncTaskLoader<Cursor> {

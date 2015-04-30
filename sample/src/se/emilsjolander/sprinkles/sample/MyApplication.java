@@ -1,7 +1,8 @@
 package se.emilsjolander.sprinkles.sample;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 import se.emilsjolander.sprinkles.Migration;
 import se.emilsjolander.sprinkles.Sprinkles;
